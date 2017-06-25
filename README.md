@@ -2,7 +2,7 @@
 问题1、 failed on connection exception: java.net.ConnectException: Connection refused; For more details see:  
 http://wiki.apache.org/hadoop/ConnectionRefused**
 
-在window下调试mapReduce发生如上异常
+在window下调试mapReduce发生如上异常   
 1.1、确认core-site.xml，yarn-site.xml的hostname是不是正确，
 一定不能包含"-"字符。     
 1.2、确认hdfs-site.xml
