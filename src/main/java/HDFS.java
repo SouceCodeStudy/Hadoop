@@ -18,28 +18,38 @@ public class HDFS {
 
     public static void main(String[] args) throws IOException {
 
+        String fileName = "/user/hadoop/mapreduce/wordcount/input/wc.input";
 
+        readHDFSFile(fileName);
+
+
+    }
+
+    public static void readHDFSFile(String fileName) throws IOException {
+
+        FileSystem fs = getFileSystem();
+
+        Path fileNamePath = new Path(fileName);
+
+        FSDataInputStream inputStream = fs.open(fileNamePath);
+
+        try{
+            IOUtils.copyBytes(inputStream,System.out,4096,false);
+        }catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            IOUtils.closeStream(inputStream);
+        }
+    }
+
+    public static FileSystem getFileSystem() throws IOException {
         // core-site.xml,core-default.xml
         // hdfs-site.xml,hdfs-default.xml
         Configuration conf = new Configuration();
-
         // get filesystem
         FileSystem fs = FileSystem.get(conf);
 
-        String fileName = "/user/hadoop/mapreduce/wordcount/input/wc.input";
-        Path fileNamePath = new Path(fileName);
-
-         FSDataInputStream inputStream = fs.open(fileNamePath);
-
-         try{
-             IOUtils.copyBytes(inputStream,System.out,4096,false);
-         }catch (Exception e){
-
-         } finally {
-
-         }
-
-         System.out.println(fs);
+        return fs;
     }
 
 }
