@@ -6,54 +6,21 @@ import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
-import org.apache.hadoop.mapreduce.Mapper;
-import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.StringTokenizer;
 
 /**
  * 统计文件中的单词数量
  *
  */
-public class WordCount {
-
-    public static class WordCountMapper extends Mapper<LongWritable,Text,Text,LongWritable>{
-
-
-        public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-
-            StringTokenizer tokens = new StringTokenizer(value.toString());
-
-            while(tokens.hasMoreTokens()) {
-                //  取得下一个数据
-                String text = tokens.nextToken();
-                context.write(new Text(text),new LongWritable(1));
-            }
-
-
-        }
-    }
-
-    public static class WordCountReduce extends Reducer<Text,LongWritable,Text,LongWritable>{
-
-        public void reduce(Text key, Iterable<LongWritable> values, Context context) throws IOException, InterruptedException {
-
-            Long totalCount = Long.valueOf(1);
-
-            for(LongWritable value:values) {
-                totalCount += value.get();
-            }
-            context.write(key,new LongWritable(totalCount));
-        }
-    }
+public class WordCountMapperReduce {
 
     public static void main(String[] args) throws InterruptedException, IOException, ClassNotFoundException {
 
-        WordCount wordCount = new WordCount();
+        WordCountMapperReduce wordCount = new WordCountMapperReduce();
 
         String[] arguments = {
                 "/user/hadoop/mapreduce/wordcount/input",
@@ -127,7 +94,7 @@ public class WordCount {
         // 2.job
         Job job = Job.getInstance(conf,this.getClass().getSimpleName());
         // 3.jar
-        job.setJarByClass(WordCount.class);
+        job.setJarByClass(WordCountMapperReduce.class);
 
         // 4.input
         FileInputFormat.addInputPath(job,new Path(args[0]));
