@@ -1,3 +1,5 @@
+package com.opensource.mapreduce;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileSystem;
@@ -79,7 +81,7 @@ public class WordCountMapperReduce {
     public static class WordCountReduce2 extends Reducer<Text,LongWritable,Text,LongWritable> {
 
 
-        public  void reduce(Text key, Iterable<LongWritable> values, Reducer.Context context) throws IOException, InterruptedException {
+        public  void reduce(Text key, Iterable<LongWritable> values, Context context) throws IOException, InterruptedException {
 
             Long totalCount = Long.valueOf(1);
 
