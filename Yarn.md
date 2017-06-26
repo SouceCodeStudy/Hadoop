@@ -1,5 +1,5 @@
 ResourceManager    
-	功能  
+	功能   
 			处理客户端请求  
 			启动/监控Application Master  
 			监控NodeManager  
