@@ -8,7 +8,7 @@ import java.util.StringTokenizer;
 /**
  * 单词统计的MAPPER
  */
-public class WordCountMapper extends Mapper<LongWritable,Text,Text,LongWritable>{
+public   class  WordCountMapper extends Mapper<LongWritable,Text,Text,LongWritable>{
 
     public void map(LongWritable key, Text value, Mapper.Context context) throws IOException, InterruptedException {
 

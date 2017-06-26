@@ -6,6 +6,7 @@ import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
@@ -75,7 +76,20 @@ public class WordCountMapperReduce {
         }
 
     }
+    public static class WordCountReduce2 extends Reducer<Text,LongWritable,Text,LongWritable> {
 
+
+        public  void reduce(Text key, Iterable<LongWritable> values, Reducer.Context context) throws IOException, InterruptedException {
+
+            Long totalCount = Long.valueOf(1);
+
+            for(LongWritable value:values) {
+                totalCount += value.get();
+            }
+            context.write(key,new LongWritable(totalCount));
+        }
+
+    }
     /**
      * 运行MapReduce程序
      * 如果用命令打包执行在yarn上
