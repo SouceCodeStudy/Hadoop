@@ -26,6 +26,11 @@ public class HDFS {
 
     }
 
+    /**
+     * 读取HDFS文件
+     * @param fileName
+     * @throws IOException
+     */
     public static void readHDFSFile(String fileName) throws IOException {
 
         FileSystem fs = getFileSystem();
